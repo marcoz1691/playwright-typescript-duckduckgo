@@ -1,0 +1,25 @@
+{
+  "name": "prediktive-qa-assessment",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DuckDuckGo QA assessment - Playwright + TypeScript (Web + API)",
+  "scripts": {
+    "test": "playwright test",
+    "test:web": "playwright test --project=web",
+    "test:api": "playwright test --project=api",
+    "test:headed": "playwright test --project=web --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "codegen": "playwright codegen https://start.duckduckgo.com/",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  }
+}
