@@ -1,5 +1,7 @@
 # DuckDuckGo QA Assessment - Playwright + TypeScript
 
+[![Playwright Tests](https://github.com/marcoz1691/playwright-typescript-duckduckgo/actions/workflows/playwright.yml/badge.svg)](https://github.com/marcoz1691/playwright-typescript-duckduckgo/actions/workflows/playwright.yml)
+
 Web (UI) and API automation for the three test cases in the assessment, built with
 [Playwright Test](https://playwright.dev) and TypeScript using the Page Object Model.
 
