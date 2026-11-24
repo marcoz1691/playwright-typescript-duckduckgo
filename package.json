@@ -12,14 +12,22 @@
     "test:debug": "playwright test --debug",
     "codegen": "playwright codegen https://start.duckduckgo.com/",
     "report": "playwright show-report",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "check": "npm run typecheck && npm run lint"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.19"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.65.1",
     "@types/node": "^26.6.6",
-    "typescript": "^7.0.2"
+    "eslint": "^10.15.0",
+    "eslint-plugin-playwright": "^2.12.2",
+    "globals": "^17.14.0",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.74.0"
   }
 }

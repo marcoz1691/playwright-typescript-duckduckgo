@@ -17,7 +17,7 @@ export class ResultsPage extends BasePage {
 
   async waitForResults(): Promise<void> {
     await this.page.waitForURL(/[?&]q=|home-error\/418/);
-    await this.assertNotBlockedByBotProtection();
+    this.assertNotBlockedByBotProtection();
     await expect(this.results.first()).toBeVisible();
   }
 

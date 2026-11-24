@@ -11,7 +11,7 @@ Web (UI) and API automation for the three test cases in the assessment, built wi
 
 ## Setup
 
-Requirements: Node.js 18+.
+Requirements: Node.js 20.19+ (22 LTS or newer recommended).
 
 ```bash
 npm ci
@@ -29,6 +29,8 @@ npm run test:ui       # Playwright UI mode (watch, time-travel, pick locator)
 npm run codegen       # record actions / discover locators on start.duckduckgo.com
 npm run report        # open the last HTML report
 npm run typecheck     # tsc --noEmit
+npm run lint          # ESLint (typescript-eslint + eslint-plugin-playwright)
+npm run check         # typecheck + lint
 ```
 
 On failure, a trace, screenshot and video are kept in `test-results/` (`npx playwright show-trace <trace.zip>`).
@@ -37,6 +39,8 @@ On failure, a trace, screenshot and video are kept in `test-results/` (`npx play
 
 ```
 playwright.config.ts          projects: web (Chromium) and api (no browser)
+eslint.config.mjs             lint rules, incl. Playwright best-practice rules
+.github/workflows/            CI: typecheck + lint, then api and web tests in parallel
 src/
   pages/                      BasePage, HomePage, ResultsPage (Page Objects)
   components/RegionsModal.ts  component object for the "All regions" popover
@@ -75,12 +79,18 @@ tests/
   contain `HeadlessChrome`. The `web` project uses full Chromium (`channel: 'chromium'`) with a regular
   desktop user agent; `BasePage.assertNotBlockedByBotProtection()` fails fast with a clear message if it
   happens anyway.
+- **Static checks as a gate.** `typescript-eslint` with type-aware rules (e.g. `no-floating-promises`
+  catches a missing `await`) and `eslint-plugin-playwright` (no `waitForTimeout`, no `test.only`, no
+  conditionals in tests).
+- **CI.** GitHub Actions runs typecheck + lint first, then the `api` and `web` projects as parallel jobs
+  (so a blocked web run does not hide API results), uploads the HTML report, keeps traces on failure,
+  and runs on a weekday schedule to catch changes on the live site.
 
 ## What I would improve with more time
 
 Also marked inline with `// IMPROVEMENT:` comments.
 
-- CI pipeline (GitHub Actions) with sharding, HTML report artifacts and a nightly schedule.
+- Sharding and a merged HTML report once the suite grows; Slack/Teams notification on scheduled failures.
 - Cross-browser projects (Firefox, WebKit) once the bot-protection behaviour is validated for them.
 - Schema validation of the API response (zod/ajv) instead of hand-written partial types.
 - Retry with backoff in the API client for 429/5xx.
